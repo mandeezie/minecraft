@@ -7,7 +7,7 @@
 * class: CS 4450
 *
 * assignment: program 3
-* date last modified: 3/8/19
+* date last modified: 3/21/19
 *
 * purpose: create a way to manipulate the first person camera
 * to be able to display the correct information to the screen
@@ -30,6 +30,8 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
+    
+    private Chunk chunk;
 
     //method: FPCameraController
     //purpose: initialize the camera variables
@@ -37,10 +39,12 @@ public class FPCameraController {
     {   
         //instantiate position Vector3f to the x y z params.
         position = new Vector3f(x, y, z);
-        lPosition = new Vector3f(x,y,z);
+        lPosition = new Vector3f(x, y, z);
         lPosition.x = 0f;
         lPosition.y = 15f;
         lPosition.z = 0f;
+        
+        chunk = new Chunk((int)lPosition.x, (int)lPosition.y, (int)lPosition.z);
     }
 
     //method: yaw
@@ -66,7 +70,7 @@ public class FPCameraController {
         position.z += zOffset;
     }
 
-    //method:
+    //method: walkBackwards
     //purpose: moves the camera backward relative to its current rotation (yaw)
     public void walkBackwards(float distance)
     {
@@ -120,7 +124,7 @@ public class FPCameraController {
     }
     
     //method: gameLoop
-    //purpose: loop through the 
+    //purpose: continuously update the screen
     public void gameLoop()
     {
         FPCameraController camera = new FPCameraController(0, 0, 0);
@@ -158,7 +162,7 @@ public class FPCameraController {
             glLoadIdentity();
             camera.lookThrough();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            render();
+            chunk.render();
             Display.update();
             Display.sync(60);
         }

@@ -7,7 +7,7 @@
 * class: CS 4450
 *
 * assignment: program 3
-* date last modified: 3/8/19
+* date last modified: 3/21/19
 *
 * purpose: this program uses OpenGL to create a minecraft-like
 * world
@@ -24,7 +24,7 @@ import org.lwjgl.input.Mouse;
 
 public class Project3 {
     
-    private FPCameraController fp = new FPCameraController(0f,0f,0f);
+    private FPCameraController fp;
     private DisplayMode displayMode;
     
     //method: start
@@ -33,6 +33,7 @@ public class Project3 {
         try {
             createWindow();
             initGL();
+            fp = new FPCameraController(0f,0f,0f);
             fp.gameLoop();
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,6 +61,11 @@ public class Project3 {
     //method: initGL
     //purpose: initialize the GL properties
     private void initGL() {
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnable(GL_DEPTH_TEST);
+
+        
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
