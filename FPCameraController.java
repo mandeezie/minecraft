@@ -44,7 +44,7 @@ public class FPCameraController {
         lPosition.y = 15f;
         lPosition.z = 0f;
         
-        chunk = new Chunk((int)lPosition.x, (int)lPosition.y, (int)lPosition.z);
+        chunk = new Chunk((int)-30, (int)-30, (int)-30);
     }
 
     //method: yaw
@@ -174,7 +174,7 @@ public class FPCameraController {
     private void render() {
         try{
             glBegin(GL_QUADS);
-            //right, Blue
+            //right
                 glColor3f(0.0f,0.0f,1.0f);
                 glVertex3f( 1.0f,1.0f,-1.0f);
                 glVertex3f(1.0f,1.0f,1.0f);
@@ -183,7 +183,7 @@ public class FPCameraController {
             glEnd();
             
             glBegin(GL_QUADS);
-            //top, R+B - purple
+            //top
                 glColor3f(1.0f,0.0f,1.0f);
                 glVertex3f( 1.0f,1.0f,-1.0f);
                 glVertex3f(-1.0f,1.0f,-1.0f);
@@ -192,7 +192,7 @@ public class FPCameraController {
             glEnd();
             
             glBegin(GL_QUADS);
-            //bottom, Red
+            //bottom
                 glColor3f(1.0f,0.0f,0.0f);
                 glVertex3f( 1.0f,-1.0f,1.0f);
                 glVertex3f(-1.0f,-1.0f,1.0f);
@@ -201,7 +201,7 @@ public class FPCameraController {
             glEnd();
             
             glBegin(GL_QUADS);
-            //front, G+B 
+            //front
                 glColor3f(0.0f,1.0f,1.0f);
                 glVertex3f( 1.0f,1.0f,1.0f);
                 glVertex3f(-1.0f,1.0f,1.0f);
@@ -210,7 +210,7 @@ public class FPCameraController {
             glEnd();
             
             glBegin(GL_QUADS);
-            //back, R+G - yellow
+            //back
                 glColor3f(1.0f,1.0f,1.0f);
                 glVertex3f( 1.0f,-1.0f,-1.0f);
                 glVertex3f(-1.0f,-1.0f,-1.0f);
@@ -219,7 +219,7 @@ public class FPCameraController {
             glEnd();
             
             glBegin(GL_QUADS);
-            //left, Green
+            //left
                 glColor3f(0.0f,1.0f,0.0f);
                 glVertex3f(-1.0f,1.0f,1.0f);
                 glVertex3f(-1.0f,1.0f,-1.0f);

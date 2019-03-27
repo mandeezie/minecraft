@@ -7,7 +7,7 @@
 * class: CS 4450
 *
 * assignment: program 3
-* date last modified: 3/21/19
+* date last modified: 3/27/19
 *
 * purpose: this program uses OpenGL to create a minecraft-like
 * world
@@ -64,7 +64,9 @@ public class Project3 {
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnable(GL_DEPTH_TEST);
-
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState (GL_TEXTURE_COORD_ARRAY);
+        
         
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glMatrixMode(GL_PROJECTION);
