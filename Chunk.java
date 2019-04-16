@@ -138,6 +138,9 @@ public class Chunk {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
+    //method: checkMaterialBoundaries
+    //purpose: check if block at x, y, z is within valid boundaries to generate
+    //terrain texture of type (0:sand, 1:water, 2:dirt, 3:stone)
     private boolean checkMaterialBoundaries(int type, int x, int y, int z, int[][] bounds){
         if(x >= bounds[type][0] &&
            x <= bounds[type][1] &&
@@ -150,7 +153,7 @@ public class Chunk {
     }
     
     
-       //method: createCubeVertexCol
+    //method: createCubeVertexCol
     //purpose: create an array of the cube vertices
     
     private float[] createCubeVertexCol(float[] cubeColorArray) {
@@ -172,7 +175,7 @@ public class Chunk {
         return cubeColors;
     }
     
-     //mehtod: createCube
+    //method: createCube
     //purpose: create the cube at the given location 
     public static float[] createCube(float x, float y, float z)
     {
