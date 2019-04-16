@@ -37,7 +37,7 @@ public class Project3 {
         try {
             createWindow();
             initGL();
-            fp = new FPCameraController(0, 0, 0, 1);
+            fp = new FPCameraController(0, -30, 0, 1);
             fp.gameLoop();
         } catch (Exception e) {
             e.printStackTrace();

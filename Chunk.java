@@ -63,6 +63,28 @@ public class Chunk {
   //method: rebuildMesh
     //purpose: rebuild the mesh
     public void rebuildMesh(float Startx, float Starty, float Startz) {
+        int[][] materialBoundaries = new int[4][4];
+        //sand
+        materialBoundaries[0][0] = r.nextInt(10); //x-min
+        materialBoundaries[0][1] = r.nextInt(10) + 10; //x-max
+        materialBoundaries[0][2] = r.nextInt(10); //z-min
+        materialBoundaries[0][3] = r.nextInt(10) + 10; //z-max
+        //water
+        materialBoundaries[1][0] = r.nextInt(10); //x-min
+        materialBoundaries[1][1] = r.nextInt(10) + 10; //x-max
+        materialBoundaries[1][2] = r.nextInt(10); //z-min
+        materialBoundaries[1][3] = r.nextInt(10) + 10; //z-max
+        //dirt
+        materialBoundaries[2][0] = r.nextInt(5); //x-min
+        materialBoundaries[2][1] = r.nextInt(5) + 5; //x-max
+        materialBoundaries[2][2] = r.nextInt(5); //z-min
+        materialBoundaries[2][3] = r.nextInt(5) + 5; //z-max
+        //stone
+        materialBoundaries[3][0] = r.nextInt(5); //x-min
+        materialBoundaries[3][1] = r.nextInt(5) + 5; //x-max
+        materialBoundaries[3][2] = r.nextInt(5); //z-min
+        materialBoundaries[3][3] = r.nextInt(5) + 5; //z-max
+        
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
         VBOTextureHandle = glGenBuffers();
@@ -74,6 +96,26 @@ public class Chunk {
             for (float z = -Startz; z < -Startz + CHUNK_SIZE; z++) {
                 height = (int) (((noise.getNoise((int)x + (int)Startx/2, (int)z + (int)Startz/2)) + 1) / 2 * 10) + 5;
                 for (float y = 0; y <= height; y++) {
+                    if(y <= height){
+                        if(y == height)
+                            blocks[(int)x][(int)y][(int)z] = new Block(Block.BlockType.BlockType_Grass);
+                        //check sand
+                        if(checkMaterialBoundaries(0, (int)x, (int)y, (int)z, materialBoundaries)){
+                            blocks[(int)x][(int)y][(int)z] = new Block(Block.BlockType.BlockType_Sand);
+                        }
+                        //check water
+                        else if(checkMaterialBoundaries(1, (int)x, (int)y, (int)z, materialBoundaries)){
+                            blocks[(int)x][(int)y][(int)z] = new Block(Block.BlockType.BlockType_Water);
+                        }
+                        //check dirt
+                        else if(checkMaterialBoundaries(2, (int)x, (int)y, (int)z, materialBoundaries)){
+                            blocks[(int)x][(int)y][(int)z] = new Block(Block.BlockType.BlockType_Dirt);
+                        }
+                        //check stone
+                        else if(checkMaterialBoundaries(3, (int)x, (int)y, (int)z, materialBoundaries)){
+                            blocks[(int)x][(int)y][(int)z] = new Block(Block.BlockType.BlockType_Stone);
+                        }
+                    }
                     VertexPositionData.put(createCube((float)(Startx + x * CUBE_LENGTH), 
                             (float)(Starty + y * CUBE_LENGTH), 
                             (float)(Startz + z * CUBE_LENGTH)));
@@ -95,6 +137,19 @@ public class Chunk {
         glBufferData(GL_ARRAY_BUFFER, VertexTextureData, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+    
+    private boolean checkMaterialBoundaries(int type, int x, int y, int z, int[][] bounds){
+        if(x >= bounds[type][0] &&
+           x <= bounds[type][1] &&
+           z >= bounds[type][2] &&
+           z <= bounds[type][3])
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    
        //method: createCubeVertexCol
     //purpose: create an array of the cube vertices
     
@@ -391,18 +446,20 @@ public class Chunk {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int y = 0; y < CHUNK_SIZE; y++) {
                 for (int z = 0; z < CHUNK_SIZE; z++) {
-                    if(r.nextFloat() > 0.8f) {
-                        blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
-                    } else if (r.nextFloat() > 0.65f) {
-                        blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
-                    } else if (r.nextFloat() > 0.5f) {
-                        blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
-                    } else if (r.nextFloat() > 0.35f) {
-                        blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
-                    } else if (r.nextFloat() > 0.2f) {
-                        blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
-                    } else {
+                    float random = r.nextFloat();
+                    /*To-do: add water*/
+                    if(y == 0)
                         blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
+                    else if(y == 1 || y == 2){
+                        if(random > 0.5f)
+                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
+                        else
+                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
+                    }else{
+                        if(random > 0.4f)
+                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+                        else
+                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
                     }
                 }
             }
