@@ -30,13 +30,14 @@ public class FPCameraController {
         private Vector3f position = null;
         private Vector3f IPosition = null;
          //the rotation around the Y axis of the camera
-        private float yaw = 0.0f;
+        private float yaw = 120.0f;
          //the rotation around the X axis of the camera
-        private float pitch = 0.0f;
+        private float pitch = -15.0f;
         private double currTime = System.currentTimeMillis();
         private Chunk[] chunk;
         private int seed = (int)System.currentTimeMillis();
-        private int numChunks ;
+        private int numChunks;
+        private static final float MAX_LOOK_DOWN = 60.0f, MAX_LOOK_UP = -30.0f;
         //method: FPCameraController
     //purpose: initialize the camera variables
         
@@ -76,7 +77,10 @@ public class FPCameraController {
     //purpose: increment the camera's current yaw rotation
         public void pitch(float amount) {
             pitch -= amount;
-           
+            if(pitch < MAX_LOOK_UP)
+                pitch = MAX_LOOK_UP;
+            else if(pitch > MAX_LOOK_DOWN)
+                pitch = MAX_LOOK_DOWN;
         }
         
         //method: walkForward
