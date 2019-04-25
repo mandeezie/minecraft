@@ -36,8 +36,8 @@ public class Project3 {
     public void start() {
         try {
             createWindow();
-            initGL();
             fp = new FPCameraController(0, -30, 0, 1);
+            initGL();
             fp.gameLoop();
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,15 +61,6 @@ public class Project3 {
         Display.setTitle("Final Project - DJ double A");
         Display.create();
     }
-    
-    //method: initLightArrays
-    //purpose: initialize the light arrays
-    private void initLightArrays() {
-        lightPosition = BufferUtils.createFloatBuffer(4);
-        lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();
-        whiteLight = BufferUtils.createFloatBuffer(4);
-        whiteLight.put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
-}
 
     
     //method: initGL
@@ -81,11 +72,8 @@ public class Project3 {
         glEnable(GL_TEXTURE_2D);
         glEnableClientState (GL_TEXTURE_COORD_ARRAY);
         
-        initLightArrays();
-        glLight(GL_LIGHT0, GL_POSITION, lightPosition);
-        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);
-        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);
-        glLight(GL_LIGHT0, GL_AMBIENT, whiteLight);
+        fp.initLightArrays();
+        
         glEnable(GL_LIGHTING);
         glEnable(GL_LIGHT0);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
