@@ -138,9 +138,6 @@ public class FPCameraController {
             glRotatef(pitch, 1.0f, 0.0f, 0.0f);
             glRotatef(yaw, 0.0f, 1.0f, 0.0f);
             glTranslatef(position.x, position.y, position.z);
-            FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-            lightPosition.put(IPosition.x).put(IPosition.y).put(IPosition.z).put(1.0f).flip();
-            glLight(GL_LIGHT0, GL_POSITION, lightPosition);
         }
         
         
