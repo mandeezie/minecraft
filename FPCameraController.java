@@ -22,7 +22,10 @@ import org.lwjgl.Sys;
 import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 
+
 public class FPCameraController {
+        private FloatBuffer lightPosition;
+        private FloatBuffer whiteLight;
         //3d vector to store the camera's position in
         private Vector3f position = null;
         private Vector3f IPosition = null;
@@ -36,6 +39,7 @@ public class FPCameraController {
         private int numChunks ;
         //method: FPCameraController
     //purpose: initialize the camera variables
+        
         public FPCameraController(float x, float y, float z, int nC) {
                     //instantiate position Vector3f to the x y z params.
 
@@ -52,6 +56,14 @@ public class FPCameraController {
                     
                 }
             }
+        }
+        //method: initLightArrays
+    //purpose: initialize the light arrays
+        public void initLightArrays() {
+        lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(0.0f).put(0.0f).put(35.0f).put(1.0f).flip();
+        whiteLight = BufferUtils.createFloatBuffer(4);
+        whiteLight.put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
         }
         
         // method: yaw
@@ -74,9 +86,7 @@ public class FPCameraController {
             float zOffset = distance*(float)Math.cos(Math.toRadians(yaw));
             position.x -= xOffset;
             position.z += zOffset;
-            FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-            lightPosition.put(IPosition.x+=xOffset).put(IPosition.y).put(IPosition.z-=zOffset).put(1.0f).flip();
-            glLight(GL_LIGHT0, GL_POSITION, lightPosition);
+            
         }
         
         //method: walkBackwards
@@ -86,9 +96,7 @@ public class FPCameraController {
             float zOffset = distance*(float)Math.cos(Math.toRadians(yaw));
             position.x += xOffset;
             position.z -= zOffset;
-            FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-            lightPosition.put(IPosition.x-=xOffset).put(IPosition.y).put(IPosition.z+=zOffset).put(1.0f).flip();
-            glLight(GL_LIGHT0, GL_POSITION, lightPosition);
+            
         }
         
         // method: strafeLeft
@@ -99,9 +107,7 @@ public class FPCameraController {
             float zOffset = distance*(float)Math.cos(Math.toRadians(yaw - 90));
             position.x -= xOffset;
             position.z += zOffset;
-            FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-            lightPosition.put(IPosition.x+=xOffset).put(IPosition.y).put(IPosition.z-=zOffset).put(1.0f).flip();
-            glLight(GL_LIGHT0, GL_POSITION, lightPosition);
+            
         }
         
         // method: strafeRight
@@ -111,9 +117,7 @@ public class FPCameraController {
             float zOffset = distance*(float)Math.cos(Math.toRadians(yaw + 90));
             position.x -= xOffset;
             position.z += zOffset;
-            FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-            lightPosition.put(IPosition.x+=xOffset).put(IPosition.y).put(IPosition.z-=zOffset).put(1.0f).flip();
-            glLight(GL_LIGHT0, GL_POSITION, lightPosition);
+            
         }
         
         // method: moveUp
@@ -170,7 +174,10 @@ public class FPCameraController {
                 camera.moveUp(movementSpeed);
             if (Keyboard.isKeyDown(Keyboard.KEY_E) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) 
                 camera.moveDown(movementSpeed);
-            
+                glLight(GL_LIGHT0, GL_POSITION, lightPosition); //sets our light’s position
+                glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);//sets our specular light
+                glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);//sets our diffuse light
+                glLight(GL_LIGHT0, GL_AMBIENT, whiteLight);//sets our ambient light
                
   
                 glLoadIdentity();
