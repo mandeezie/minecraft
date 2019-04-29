@@ -1,3 +1,4 @@
+
 /***************************************************************
 * file: FPCameraController.java
 * author:   Amanda Cosentino
@@ -147,6 +148,8 @@ public class FPCameraController {
         
         //method: gameLoop
     //purpose: continuously update the screen
+        int counter=0;
+        int iteration1=0;
         public void gameLoop() {
             FPCameraController camera = new FPCameraController(position.x, position.y, position.z, numChunks);
             float dx=0;
@@ -180,9 +183,93 @@ public class FPCameraController {
                 glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);//sets our diffuse light
                 glLight(GL_LIGHT0, GL_AMBIENT, whiteLight);//sets our ambient light
                
+            //background color changes
+            //night time
+            if(Keyboard.isKeyDown(Keyboard.KEY_N)){
+                glClearColor(3.0f, 3.0f, 3.0f, 0.0f);  
+                
+            }
+            //rising sun-orange
+            if(Keyboard.isKeyDown(Keyboard.KEY_R)){
+                glClearColor(1.0f, 0.5f, 0.0f, 0.0f);  
+            
+            }
+            //daytime blue
+            if(Keyboard.isKeyDown(Keyboard.KEY_G)){
+                glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+            
+            }
+            //dusk
+            if(Keyboard.isKeyDown(Keyboard.KEY_K)){
+                glClearColor(0.5f, 0.0f, 1.0f, 0.0f);
+            
+            }
+            //starts afternoon goes to midnight
+            if(iteration1==0){
+                
+               
+            if(counter>1000){
+                counter=0;
+                iteration1=1;
+                glClearColor(0.184314f, 0.184314f, 0.309804f, 0.0f);
+            }else if(counter>900){
+                glClearColor(0.137255f, 0.137255f,0.556863f, 0.0f);
+            }else if(counter>800){
+                 glClearColor(0.196078f, 0.196078f, 0.8f, 0.0f);
+            }else if(counter>700){
+                 glClearColor(0.2f, 0.0f, 1.0f, 0.0f);
+            }else if(counter>600){//
+                 glClearColor(0.2f, 0.4f, 0.9f, 0.0f);
+            }else if(counter>500){//
+                glClearColor(0.2f, 0.4f, 0.8f, 0.0f);
+            }else if(counter>400){
+                glClearColor(0.15f, 0.4f, 0.7f, 0.0f);
+            }else if(counter>300){
+                glClearColor(0.15f, 0.4f, 0.623529f, 0.0f);
+            }else if(counter>200){
+                glClearColor(0.18f, 0.5f,0.623529f, 0.0f);
+            }else if(counter>100){
+                //good
+                glClearColor(0.196f, 0.6f, 0.8f, 0.0f);
+            }else{
+                //good
+                glClearColor(0.22f, 0.69f, 0.87f, 0.0f);
+            }
+            }else{
+                //starts midnight goes to afternoon
+                if(counter>1000){
+                counter=0;
+                iteration1=0;
+                glClearColor(0.196f, 0.6f, 0.8f, 0.0f);
+            }else if(counter>900){
+                glClearColor(0.24f, 0.5f,0.69f, 0.0f);
+            }else if(counter>800){
+                 glClearColor(0.24f, 0.4f, 0.7f, 0.0f);
+            }else if(counter>700){
+                 glClearColor(0.23f, 0.4f, 0.8f, 0.0f);
+            }else if(counter>600){//
+                 glClearColor(0.22f, 0.4f, 0.8f, 0.0f);
+            }else if(counter>500){//
+                glClearColor(0.21f, 0.2f, 0.9f, 0.0f);
+            }else if(counter>400){
+                glClearColor(0.2f, 0.0f, 1.0f, 0.0f);
+            }else if(counter>300){
+                glClearColor(0.196078f, 0.196078f, 0.8f, 0.0f);
+            }else if(counter>200){
+                glClearColor(0.137255f, 0.137255f,0.54f, 0.0f);
+            }else if(counter>100){
+                //good
+                glClearColor(0.137255f, 0.137255f,0.55f, 0.0f);
+            }else{
+                //good
+                glClearColor(0.137255f, 0.137255f,0.556863f, 0.0f);
+            }
+                
+            }
   
                 glLoadIdentity();
                 camera.lookThrough();
+                
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 for (int i = 0; i < chunk.length; i++) {
                     chunk[i].render();
@@ -190,7 +277,11 @@ public class FPCameraController {
                 prevYPos = camera.position.y;
                 Display.update();
                 Display.sync(60);
+                counter+=1;
             }
+            
+            
+            
             Display.destroy();
         }
         //method: render
