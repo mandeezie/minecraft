@@ -33,14 +33,14 @@ public class Project3 {
     
     //method: start
     //purpose: initializes the window
-    public void start() {
+    public void start(boolean texture) {
         try {
             createWindow();
-            fp = new FPCameraController(0, -25, 0, 1);
+            fp = new FPCameraController(0, -25, 0, 1, texture);
             initGL();
             fp.gameLoop();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
     
@@ -65,7 +65,7 @@ public class Project3 {
     
     //method: initGL
     //purpose: initialize the GL properties
-    private void initGL() {
+    public void initGL() {
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnable(GL_DEPTH_TEST);
@@ -91,6 +91,6 @@ public class Project3 {
     //purpose: start the program
     public static void main(String[] args) {
         Project3 basic = new Project3();
-        basic.start();
+        basic.start(false);
     }
 }

@@ -51,15 +51,6 @@ public class Chunk {
         glPopMatrix();
     }
     
-    
-
-   
-     
-    
-    
-     
-   
-    
   //method: rebuildMesh
     //purpose: rebuild the mesh
     public void rebuildMesh(float Startx, float Starty, float Startz) {
@@ -437,9 +428,13 @@ public class Chunk {
     }
        //method: Chunk
     //purpose: create the chunk of blocks relative to the starting position
-    public Chunk(int startX, int startY, int startZ, int s) {
+    public Chunk(int startX, int startY, int startZ, int s, boolean texturePack) {
+        
         try {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("terrain.png"));
+            if(!texturePack)
+                texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("terrain.png"));
+            else
+                texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("texture.png"));
         } catch (Exception e) {
             System.err.println("Error loading terrain: terrain.png not found");
         }

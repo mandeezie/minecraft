@@ -1,4 +1,3 @@
-
 /***************************************************************
 * file: FPCameraController.java
 * author:   Amanda Cosentino
@@ -8,12 +7,13 @@
 * class: CS 4450
 *
 * assignment: program 3
-* date last modified: 3/28/19
+* date last modified: 4/29/19
 *
 * purpose: create a way to manipulate the first person camera
 * to be able to display the correct information to the screen
 * 
 ****************************************************************/ 
+import java.io.IOException;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -21,7 +21,12 @@ import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.Sys;
 import java.nio.FloatBuffer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 
 public class FPCameraController {
@@ -39,10 +44,12 @@ public class FPCameraController {
         private int seed = (int)System.currentTimeMillis();
         private int numChunks;
         private static final float MAX_LOOK_DOWN = 60.0f, MAX_LOOK_UP = -30.0f;
-        //method: FPCameraController
-    //purpose: initialize the camera variables
+        boolean texturePack;
         
-        public FPCameraController(float x, float y, float z, int nC) {
+        
+        //method: FPCameraController
+        //purpose: initialize the camera variables
+        public FPCameraController(float x, float y, float z, int nC, boolean texturePack) {
                     //instantiate position Vector3f to the x y z params.
 
             position = new Vector3f(x,y,z);
@@ -54,8 +61,7 @@ public class FPCameraController {
             chunk = new Chunk[numChunks * numChunks];
             for (int i = 0; i < numChunks; i++) {
                 for (int j = 0; j < numChunks; j++) {
-                    chunk[j] = new Chunk(i * -60, 0, j * -60, seed);
-                    
+                    chunk[j] = new Chunk(i * -60, 0, j * -60, seed, texturePack);
                 }
             }
         }
@@ -151,13 +157,16 @@ public class FPCameraController {
         int counter=0;
         int iteration1=0;
         public void gameLoop() {
-            FPCameraController camera = new FPCameraController(position.x, position.y, position.z, numChunks);
+            FPCameraController camera = new FPCameraController(position.x, position.y, position.z, numChunks, texturePack);
             float dx=0;
             float dy=0;
             float dt=0;
             float yawSensitivity = 0.09f;
             float pitchSensitivity = 0.09f;
             float movementSpeed = 0.35f;
+            
+            
+                
             
             float prevYPos = 10;
             Mouse.setGrabbed(true);
@@ -204,6 +213,22 @@ public class FPCameraController {
                 glClearColor(0.5f, 0.0f, 1.0f, 0.0f);
             
             }
+            
+            if(Keyboard.isKeyDown(Keyboard.KEY_R))
+            {
+                Display.destroy();
+                
+                Project3 texture = new Project3();
+                texture.start(true);
+            }
+            if(Keyboard.isKeyDown(Keyboard.KEY_P))
+            {
+                Display.destroy();
+                
+                Project3 texture = new Project3();
+                texture.start(false);
+            }
+            
             //starts afternoon goes to midnight
             if(iteration1==0){
                 
@@ -345,4 +370,6 @@ public class FPCameraController {
         }catch(Exception e){
         }
     }
+
+    
     }
