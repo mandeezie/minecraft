@@ -192,27 +192,7 @@ public class FPCameraController {
                 glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);//sets our diffuse light
                 glLight(GL_LIGHT0, GL_AMBIENT, whiteLight);//sets our ambient light
                
-            //background color changes
-            //night time
-            if(Keyboard.isKeyDown(Keyboard.KEY_N)){
-                glClearColor(3.0f, 3.0f, 3.0f, 0.0f);  
-                
-            }
-            //rising sun-orange
-            if(Keyboard.isKeyDown(Keyboard.KEY_R)){
-                glClearColor(1.0f, 0.5f, 0.0f, 0.0f);  
             
-            }
-            //daytime blue
-            if(Keyboard.isKeyDown(Keyboard.KEY_G)){
-                glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
-            
-            }
-            //dusk
-            if(Keyboard.isKeyDown(Keyboard.KEY_K)){
-                glClearColor(0.5f, 0.0f, 1.0f, 0.0f);
-            
-            }
             
             if(Keyboard.isKeyDown(Keyboard.KEY_R))
             {
